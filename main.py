@@ -13,43 +13,34 @@ knowledge. (AKA, DONT SELL MY SHIT JEAN AUGUSTE AND DJO ALCIDOR)
 @special mention : Jackie Chao
 '''
 
-import run
-import bot
+import sys
+from PyQt5.QtWidgets import QApplication, QVBoxLayout, QWidget, QTextEdit
+import startPushButton
 
+def createTxtEditor():
+    textEditor = QTextEdit()
+    textEditor.setReadOnly(True)
+    textEditor.append('Le programme est prêt à être lancé')
+    return textEditor
 
-def startRun(refills):
-    while(bot.imageIsFound('notEnoughEnergy.png') == False):
-        print('A new run has started')
-        runIsOver = False
-        if(bot.imageIsFound('startBattleBtn.png')):
-            pos = bot.locateImage('startBattleBtn.png')
-            bot.clickImage(pos)
+def createBtn(txtEditor):
+    startbtn = startPushButton.startBtn('Start bot', txtEditor)
+    return startbtn
 
-        while (runIsOver!=True):
-            if(bot.imageIsFound('loseScreen.png')):
-                print('player has died')
-                run.playerDied()
-                runIsOver = True
-            elif(bot.imageIsFound('victoryScreen.png')):
-                print('player has won')
-                run.victoryScreen()
-                runIsOver = True
-            elif(bot.imageIsFound('reviveBtn.png')):
-                print('player died')
-                run.playerDied()
-
-    if(bot.imageIsFound('notEnoughEnergy.png')):
-        if(refills==True):
-            run.noMoreEnergy()
-        else:
-            print('Refills has been deactivated.')
-
-
+def createLayout():
+    layout = QVBoxLayout()
+    txtEditor = createTxtEditor()
+    layout.addWidget(createBtn(txtEditor))
+    layout.addWidget(txtEditor)
+    return layout
 
 if __name__== "__main__":
-
-    refillsWithCrystals = False
-
-    startRun(refillsWithCrystals)
-
+    app = QApplication(sys.argv)
+    app.setStyle('Fusion')
+    window = QWidget()
+    window.setLayout(createLayout())
+    window.show()
+    app.exec_()
     print('The runs has been finished')
+    sys.exit(app.exec_())
+

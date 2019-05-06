@@ -15,6 +15,9 @@ def playerDied():
     pos = bot.locateImage('noBtn.png')
     bot.clickImage(pos)
     time.sleep(1)
+    pos = bot.locateImage('loseScreen.png')
+    bot.clickImage(pos)
+    time.sleep(0.5)
     pos = bot.locateImage('prepareBtn.png')
     bot.clickImage(pos)
     time.sleep(1)
@@ -45,11 +48,13 @@ def victoryScreen():
     time.sleep(1)
     pos = bot.locateImage('replay.png')
     bot.clickImage(pos)
+    time.sleep(1)
 
 def runesFound():
     if(bot.imageIsFound('6starsRune.png')):
         print('6* runes')
-
+        pos = bot.locateImage('getRuneBtn.png')
+        bot.clickImage(pos)
     else:
         pos = bot.locateImage('sell.png')
         bot.clickImage(pos)
@@ -57,7 +62,7 @@ def runesFound():
         pos = bot.locateImage('yesBtn.png')
         bot.clickImage(pos)
         time.sleep(1)
-        print('runes')
+        print('5* runes')
 
 def refill():
     pos = bot.locateImage('shop.png')
@@ -72,3 +77,29 @@ def noMoreEnergy():
 def replay():
     pos = bot.locateImage('replay.png')
     bot.clickImage(pos)
+
+def stopRun():
+    exit()
+
+def startRun(refills):
+    print('A new run has started')
+    runIsOver = False
+    if(bot.imageIsFound('startBattleBtn.png')):
+        pos = bot.locateImage('startBattleBtn.png')
+        bot.clickImage(pos)
+
+    while (runIsOver!=True):
+        if(bot.imageIsFound('victoryScreen.png')):
+            print('player has won')
+            victoryScreen()
+            runIsOver = True
+        elif(bot.imageIsFound('reviveBtn.png')):
+            print('player died')
+            playerDied()
+            runIsOver = True
+
+    if(bot.imageIsFound('notEnoughEnergy.png')):
+        if(refills==True):
+            noMoreEnergy()
+        else:
+            print('Refills has been deactivated.')
