@@ -5,50 +5,53 @@
 
 import time
 import bot
+
+
+#Used when victory and defeat screen appear.
+longWaitTime = 2
+
+mediumWaitTime = 1.1
+#Used when we don't need to wait too long before clicking
+shortWaitTime = 0.7
 '''
  This procedure will be called when the player has failed a run.
  The program will then refuse to revive himself for 10 crystals and 
  start a new run.
 '''
 def playerDied():
-    time.sleep(2)
+    time.sleep(longWaitTime)
     pos = bot.locateImage('noBtn.png')
     bot.clickImage(pos)
-    time.sleep(1)
+    time.sleep(2)
     pos = bot.locateImage('loseScreen.png')
     bot.clickImage(pos)
-    time.sleep(0.5)
+    time.sleep(shortWaitTime)
     pos = bot.locateImage('prepareBtn.png')
     bot.clickImage(pos)
-    time.sleep(1)
-    pos = bot.locateImage('startBattleBtn.png')
-    bot.clickImage(pos)
+    time.sleep(shortWaitTime)
 
 '''
  This procedure will be called when the player has finished a run.
  It will click on the victory screen, open the chest and get or sell the items.
 '''
 def victoryScreen():
-    time.sleep(2)
+    time.sleep(longWaitTime)
     pos = bot.locateImage('victoryScreen.png')
     bot.clickImage(pos)
-    print('victory')
-    time.sleep(1)
+    time.sleep(shortWaitTime)
     pos = bot.locateImage('chest.png')
     bot.clickImage(pos)
     print('chest')
-    time.sleep(1)
+    time.sleep(mediumWaitTime)
     if(bot.imageIsFound('okBtn.png')):
         pos = bot.locateImage('okBtn.png')
         bot.clickImage(pos)
-        time.sleep(1)
-        print('reawrd')
     else:
         runesFound()
-    time.sleep(1)
+    time.sleep(shortWaitTime)
     pos = bot.locateImage('replay.png')
     bot.clickImage(pos)
-    time.sleep(1)
+    time.sleep(shortWaitTime)
 
 def runesFound():
     if(bot.imageIsFound('6starsRune.png')):
@@ -58,48 +61,48 @@ def runesFound():
     else:
         pos = bot.locateImage('sell.png')
         bot.clickImage(pos)
-        time.sleep(1)
+        time.sleep(shortWaitTime)
         pos = bot.locateImage('yesBtn.png')
         bot.clickImage(pos)
-        time.sleep(1)
+        time.sleep(shortWaitTime)
         print('5* runes')
 
 def refill():
     pos = bot.locateImage('shop.png')
     bot.clickImage(pos)
-    time.sleep(1)
+    time.sleep(shortWaitTime)
     pos = bot.locateImage('refillCrystals')
     bot.clickImage(pos)
 
 def noMoreEnergy():
-    print('no energy left.')
+    return bot.imageIsFound('notEnoughEnergy.png')
 
 def replay():
     pos = bot.locateImage('replay.png')
     bot.clickImage(pos)
 
-def stopRun():
-    exit()
 
-def startRun(refills):
-    print('A new run has started')
-    runIsOver = False
-    if(bot.imageIsFound('startBattleBtn.png')):
-        pos = bot.locateImage('startBattleBtn.png')
-        bot.clickImage(pos)
-
-    while (runIsOver!=True):
-        if(bot.imageIsFound('victoryScreen.png')):
-            print('player has won')
+def startRun():
+    runIsDone = False
+    print('run started')
+    while(runIsDone == False):
+        if(bot.imageIsFound('replay.png')):
+            pos = bot.locateImage('replay.png')
+            bot.clickImage(pos)
+            time.sleep(shortWaitTime)
+        elif(bot.imageIsFound('prepareBtn.png')):
+            pos = bot.locateImage('prepareBtn.png')
+            bot.clickImage(pos)
+            time.sleep(shortWaitTime)
+        elif(bot.imageIsFound('startBattleBtn.png')):
+            print('Starting battle')
+            pos = bot.locateImage('startBattleBtn.png')
+            bot.clickImage(pos)
+            time.sleep(shortWaitTime)
+        elif(bot.imageIsFound('notEnoughEnergy.png')):
+            runIsDone = True
+        elif(bot.imageIsFound('victoryScreen.png')):
             victoryScreen()
-            runIsOver = True
         elif(bot.imageIsFound('reviveBtn.png')):
-            print('player died')
             playerDied()
-            runIsOver = True
 
-    if(bot.imageIsFound('notEnoughEnergy.png')):
-        if(refills==True):
-            noMoreEnergy()
-        else:
-            print('Refills has been deactivated.')

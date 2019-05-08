@@ -16,9 +16,12 @@ knowledge. (AKA, DONT SELL MY SHIT JEAN AUGUSTE AND DJO ALCIDOR)
 import sys
 from PyQt5.QtWidgets import QApplication, QVBoxLayout, QWidget, QTextEdit
 import startPushButton
+import run
+
+app = QApplication(sys.argv)
+textEditor = QTextEdit()
 
 def createTxtEditor():
-    textEditor = QTextEdit()
     textEditor.setReadOnly(True)
     textEditor.append('Le programme est prêt à être lancé')
     return textEditor
@@ -34,13 +37,17 @@ def createLayout():
     layout.addWidget(txtEditor)
     return layout
 
+def setText(text):
+    textEditor.append(text)
+
 if __name__== "__main__":
-    app = QApplication(sys.argv)
+    '''
     app.setStyle('Fusion')
     window = QWidget()
     window.setLayout(createLayout())
     window.show()
     app.exec_()
-    print('The runs has been finished')
-    sys.exit(app.exec_())
-
+    '''
+    while(run.noMoreEnergy()==False):
+        run.startRun()
+    print('Run is over, not enough energy left.')

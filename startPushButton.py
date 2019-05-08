@@ -10,15 +10,16 @@ class startBtn(QPushButton):
         self.thread1 = thread.AThread()
         self.txtEditor = txtEditor
 
+
     @pyqtSlot()
     def on_click(self):
         if(self.text() == 'Start bot'):
             self.thread1.start()
             self.setText('Stop bot')
-            self.txtEditor.append('Starting bot')
+            self.txtEditor.append('Bot is running')
         elif(self.text() == 'Stop bot'):
             self.thread1.killthread()
             self.setText('Start bot')
-            self.txtEditor.append('Stopping bot')
+            self.txtEditor.append('Bot Stopped')
 
 

@@ -8,7 +8,7 @@ import pyautogui
  @return : x and y coordinates
 '''
 def locateImage(imageName):
-    positions = pyautogui.locateOnScreen(imageName, confidence=0.9)
+    positions = pyautogui.locateOnScreen(imageName, confidence=0.8)
     x = positions[0]
     y = positions[1]
     return x, y
@@ -22,7 +22,7 @@ def locateImage(imageName):
 '''
 def imageIsFound(imageName):
     isFound = False
-    positions = pyautogui.locateOnScreen(imageName, confidence=0.9)
+    positions = pyautogui.locateOnScreen(imageName, confidence=0.8)
     if(positions!=None):
         isFound = True
     return isFound

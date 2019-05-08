@@ -9,12 +9,17 @@ class AThread(QThread):
     def __init__(self,parent=None):
         super(AThread, self).__init__(parent)
         self.setTerminationEnabled(True)
+        self.isDone = False
 
     def run(self):
-        refills = False
-        self.start(run.startRun(refills))
+        self.start(self.task())
+        self.isDone = False
 
+    def task(self):
+        refills = False
+        while(self.isDone == False):
+            run.startRun(refills)
     def killthread(self):
+        self.isDone = True
         self.terminate()
         self.wait()
-        print('The thread has stopped')
