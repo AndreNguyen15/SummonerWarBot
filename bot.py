@@ -1,4 +1,5 @@
 import pyautogui
+import time
 
 '''
  This method will find the image on the screen and return its
@@ -23,14 +24,18 @@ def locateImage(imageName):
 def imageIsFound(imageName):
     isFound = False
     positions = pyautogui.locateOnScreen(imageName, confidence=0.8)
-    if(positions!=None):
+    if(positions != None):
         isFound = True
     return isFound
 
 '''
  Click at the coordinates given.
  
- @param pos : The position of the image that must be clicked.
+ @param imageName : The name of the image that must be clicked
+ @param waitTime : The amount amount of time the program must wait after 
+                clicking
 '''
-def clickImage(pos):
+def clickImage(imageName, waitTime):
+    pos = locateImage(imageName)
     pyautogui.click(pos[0], pos[1])
+    time.sleep(waitTime)
