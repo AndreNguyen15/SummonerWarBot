@@ -12,33 +12,8 @@ knowledge. (AKA, DONT SELL MY SHIT JEAN AUGUSTE AND DJO ALCIDOR)
 @author : André Nguyen
 @special mention : Jackie Chao
 '''
-
-import sys
-from PyQt5.QtWidgets import QApplication, QVBoxLayout, QWidget, QTextEdit
-import startPushButton
 import run
 
-app = QApplication(sys.argv)
-textEditor = QTextEdit()
-
-def createTxtEditor():
-    textEditor.setReadOnly(True)
-    textEditor.append('Le programme est prêt à être lancé')
-    return textEditor
-
-def createBtn(txtEditor):
-    startbtn = startPushButton.startBtn('Start bot', txtEditor)
-    return startbtn
-
-def createLayout():
-    layout = QVBoxLayout()
-    txtEditor = createTxtEditor()
-    layout.addWidget(createBtn(txtEditor))
-    layout.addWidget(txtEditor)
-    return layout
-
-def setText(text):
-    textEditor.append(text)
 
 if __name__== "__main__":
     '''
@@ -48,6 +23,24 @@ if __name__== "__main__":
     window.show()
     app.exec_()
     '''
-    while(run.noMoreEnergy()==False):
-        run.startRun()
-    print('Run is over, not enough energy left.')
+    print("What would you like to do? Select by entering the number.")
+
+    userInput = 0
+    refillWithCrystals = input("Do you want to refill with crystals? y/n")
+
+    while(userInput != "3"):
+        userInput = input("1 : Farm dungeons\n 2 : Farm Faimon\n 3 : Quit\n")
+        if(userInput == "1"):
+            print("Bot is now farming dungeon.")
+            while(run.noMoreEnergy()==False):
+                run.startRun()
+                if(refillWithCrystals == "y" and run.noMoreEnergy()==True):
+                    run.refillWithCrystals()
+        elif(userInput == "2"):
+            print("Starting bot to farm faimon.")
+            while(run.noMoreEnergy()==False):
+                run.faimonRun()
+        elif(userInput == "3"):
+            print("Quitting.")
+        else:
+            print("Unknown value, please enter 1 or 2 to select an option.")
