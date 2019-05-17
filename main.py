@@ -28,8 +28,8 @@ if __name__== "__main__":
     userInput = 0
     refillWithCrystals = input("Do you want to refill with crystals? y/n")
 
-    while(userInput != "3"):
-        userInput = input("1 : Farm dungeons\n 2 : Farm Faimon\n 3 : Quit\n")
+    while(userInput != "4"):
+        userInput = input("1 : Farm dungeons\n 2 : Farm Faimon\n 3 : TOA\n 4 : Quit\n")
         if(userInput == "1"):
             print("Bot is now farming dungeon.")
             while(run.noMoreEnergy()==False):
@@ -41,6 +41,10 @@ if __name__== "__main__":
             while(run.noMoreEnergy()==False):
                 run.faimonRun()
         elif(userInput == "3"):
+            print("Bot is now running TOA.")
+            while(run.noMoreEnergy()==False):
+                run.toaRun()
+        elif(userInput == "4"):
             print("Quitting.")
         else:
             print("Unknown value, please enter 1 or 2 to select an option.")

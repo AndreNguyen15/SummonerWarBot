@@ -100,8 +100,25 @@ def faimonRun():
                 if(bot.imageIsFound('yesBtn.png')):
                     bot.clickImage('yesBtn.png', shortWaitTime)
             elif(bot.imageIsFound('rewardScreen.png')):
-                bot.clickImage('rewardScreen.png', 0.1)
+                bot.clickImage('rewardScreen.png', shortWaitTime)
                 bot.clickImage('chest.png', shortWaitTime)
 
+        except:
+            print("catch")
+
+def toaRun():
+    while(noMoreEnergy()==False):
+        try:
+            if(bot.imageIsFound('startBattleBtn.png')):
+                bot.clickImage('startBattleBtn.png', shortWaitTime)
+            elif(bot.imageIsFound('okBtn.png')):
+                bot.clickImage('okBtn.png', 0)
+            elif(bot.imageIsFound('yesBtn.png')):
+                bot.clickImage('yesBtn.png', shortWaitTime)
+            elif(bot.imageIsFound('rewardScreen.png')):
+                bot.clickImage('rewardScreen.png', shortWaitTime)
+                bot.clickImage('chest.png', shortWaitTime)
+            elif(bot.imageIsFound('nextStage.png')):
+                bot.clickImage('nextStage.png', shortWaitTime)
         except:
             print("catch")
